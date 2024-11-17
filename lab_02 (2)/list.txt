@@ -1,0 +1,30 @@
+1 lada Russia no 20000000 gray new 6
+2 bmwx8 Germany yes 60000000 black new 8
+3 bmwm5 Germany no 30000000 red old 2022 50000 1 1
+4 bmwm5 Germany yes 60000000 white new 5
+5 reno France no 10000000 gray old 2008 200000 3 1
+6 kiario Korea no 400000 red old 2012 300000 2 3
+7 audir8 Germany yes 10000000 yellow new 5
+8 lada Russia no 20000000 gray new 6
+9 bmwx8 Germany yes 60000000 black new 8
+10 bmwm5 Germany yes 3000000 red old  2022 50000 1 0
+11 bmwm5 Germany yes 60000000 white new 5
+12 reno France no 10000000 gray old 2008 200000 3 1
+13 kiario Korea no 400000 red old 2012 300000 2 3
+14 audir8 Germany yes 10000000 yellow new 5
+15 aurus Russia no 8000000 black old 2019 30000 1 0
+16 lada Russia no 20000000 gray new 6
+17 bmwx8 Germany yes 60000000 black new 8
+18 bmwm5 Germany no 30000000 red old 2022 50000 1 1
+19 bmwm5 Germany yes 60000000 white new 5
+20 reno France no 10000000 gray old 2008 200000 3 1
+21 kiario Korea no 400000 red old 2012 300000 2 3
+22 audir8 Germany yes 10000000 yellow new 5
+23 lada Russia no 20000000 gray new 6
+24 bmwx8 Germany yes 60000000 black new 8
+25 bmwm5 Germany yes 2500000 red old  2022 20000 1 0
+26 bmwm5 Germany yes 60000000 white new 5
+27 reno France no 10000000 gray old 2008 200000 3 1
+28 kiario Korea no 400000 red old 2012 300000 2 3
+29 audir8 Germany yes 10000000 yellow new 5
+30 aurus Russia no 8000000 black old 2019 30000 1 0
