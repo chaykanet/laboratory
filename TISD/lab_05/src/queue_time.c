@@ -1,5 +1,30 @@
 #include "queue_time.h"
 
+#include "errcodes.h"
+
+int make_n_avg_time(list_t *list, queue_t *queue, double *add_list, double *pop_list, double *add_queue, double *pop_queue, const size_t n)
+{
+    double sum_time_add_q = 0, sum_time_add_l = 0, sum_time_pop_q = 0, sum_time_pop_l = 0;
+            
+    int rc = ERR_OK;
+    for (size_t i = 0; i < n && rc == ERR_OK; i++)
+    {
+        rc = make_n_time(list, queue, add_list, pop_list, add_queue, pop_queue, n);
+        sum_time_add_l += *add_list;
+        sum_time_pop_l += *pop_list;
+        sum_time_add_q += *add_queue;
+        sum_time_pop_q += *pop_queue;
+    }
+
+    *add_queue = sum_time_add_q / 100;
+    *pop_queue = sum_time_pop_q / 100;
+
+    *add_list = sum_time_add_l / 100;
+    *pop_list = sum_time_pop_l / 100;
+
+    return rc;
+}
+
 int add_n_int_queue(queue_t *queue, size_t const n)
 {   
     int rc = ERR_OK;

@@ -42,10 +42,13 @@ int main(void)
 
     double time_add_queue = 0, time_pop_queue = 0, time_add_list = 0, time_pop_list = 0;
 
+    double avg_len_OA1 = 0, avg_len_OA2 = 0;
+
     double probability, oa1t1, oa1t2, oa2t1, oa2t2;
 
     do
     {   
+        move = 100;
         printf("Меню:\n");
         printf("1.Вывести очереди.\n");
         printf("2.Запуск процесса моделирования для очереди.\n");
@@ -100,8 +103,9 @@ int main(void)
                 break;
             }
 
-            process_modeling_queue(&complete_queue, &downtime_queue, &avg_time_queue, probability, oa1t1, oa1t2, oa2t1, oa2t2);
-            process_modeling_queue_avg(&complete_time_avg, &down_time_avg, &avg_time_queue_avg, probability, oa1t1, oa1t2, oa2t1, oa2t2);
+            process_modeling_queue(&complete_queue, &downtime_queue, &avg_time_queue, probability, oa1t1, oa1t2, oa2t1, oa2t2, &avg_len_OA1,&avg_len_OA2);
+            printf("--------------------------\n");
+            process_modeling_queue_avg(&complete_time_avg, &down_time_avg, &avg_time_queue_avg, probability, oa1t1, oa1t2, oa2t1, oa2t2, &avg_len_OA1,&avg_len_OA2);
 
             double precent = 0;
             
@@ -110,6 +114,8 @@ int main(void)
             printf("--------------------------\n");
             printf("Время выполнения операции: %lf (ед.в)\n", complete_queue);
             printf("Время простоя ОА2: %lf (ед.в)\n", downtime_queue);
+            printf("Средняя длина очереди OA1: %lf\n", avg_len_OA1);
+            printf("Средняя длина очереди OA2: %lf\n", avg_len_OA2);
             printf("Теоритическое время: %lf (ед.в)\n", complete_time_avg);
             printf("Отклонение от ожидаемого: %.2lf%%\n", precent);
             printf("Среднее время нахождения заявки в очереди: %lf (ед.в)\n", avg_time_queue);
@@ -147,8 +153,10 @@ int main(void)
                 break;
             }
 
-            process_modeling_list(&complete_list, &downtime_list, &avg_time_list, probability, oa1t1, oa1t2, oa2t1, oa2t2);
-            process_modeling_queue_avg(&complete_time_avg, &down_time_avg, &avg_time_queue_avg, probability, oa1t1, oa1t2, oa2t1, oa2t2);
+            // process_modeling_queue(&complete_list, &downtime_list, &avg_time_list, probability, oa1t1, oa1t2, oa2t1, oa2t2, &avg_len_OA1,&avg_len_OA2);
+            process_modeling_list(&complete_list, &downtime_list, &avg_time_list, probability, oa1t1, oa1t2, oa2t1, oa2t2, &avg_len_OA1,&avg_len_OA2);
+            printf("--------------------------\n");
+            process_modeling_queue_avg(&complete_time_avg, &down_time_avg, &avg_time_queue_avg, probability, oa1t1, oa1t2, oa2t1, oa2t2, &avg_len_OA1,&avg_len_OA2);
 
             double precent = 0;
             
@@ -158,6 +166,8 @@ int main(void)
             printf("Время выполнения операции: %lf (ед.в)\n", complete_list);
             printf("Время простоя ОА2: %lf (ед.в)\n", downtime_list);
             printf("Теоритическое время: %lf (ед.в)\n", complete_time_avg);
+            printf("Средняя длина очереди OA1: %lf\n", avg_len_OA1);
+            printf("Средняя длина очереди OA2: %lf\n", avg_len_OA2);
             printf("Отклонение от ожидаемого: %.2lf%%\n", precent);
             printf("Среднее время нахождения заявки в очереди: %lf (ед.в)\n", avg_time_list);
             break;
@@ -177,16 +187,18 @@ int main(void)
 
             init_queue(&queue_time);
             init_list(&list_time);
-            
-            rc = make_n_time(&list_time, &queue_time, &time_add_list, &time_pop_list, &time_add_queue, &time_pop_queue, n);
+     
+            rc = make_n_avg_time(&list_time, &queue_time, &time_add_list, &time_pop_list, &time_add_queue, &time_pop_queue, n);
 
-            printf("--------------------------\n");
-            printf("Время добавления %d элементов для очереди массива, мс:%lf \n", n, time_add_queue);
-            printf("Время удаления %d элементов для очереди массива, мс: %lf \n\n", n, time_pop_queue);
+            if (rc == ERR_OK)
+            {
+                printf("--------------------------\n");
+                printf("Время добавления %d элементов для очереди массива, мс:%lf \n", n, time_add_queue);
+                printf("Время удаления %d элементов для очереди массива, мс: %lf \n\n", n, time_pop_queue);
 
-            printf("Время добавления %d элементов для очереди списка, мс: %lf \n", n, time_add_list);
-            printf("Время удаления %d элементов для очереди списка, мс: %lf \n\n", n, time_pop_list);
-
+                printf("Время добавления %d элементов для очереди списка, мс: %lf \n", n, time_add_list);
+                printf("Время удаления %d элементов для очереди списка, мс: %lf \n\n", n, time_pop_list);
+            }
             break;
         case 5:
             printf("Введите значение элемента типа int: \n");

@@ -13,10 +13,10 @@ int init_avg_queue(queue_t *queue, const size_t n, const double t1, const double
 
 int init_random_queue(queue_t *queue, const size_t n, const double t1, const double t2);
 
-int process_modeling_list(double *complete_time, double *down_time, double *avg_time_queue, double po, double oa1t1, double oa1t2, double oa2t1, double oa2t2);
+int process_modeling_list(double *complete_time, double *down_time, double *avg_time_queue, double po, double oa1t1, double oa1t2, double oa2t1, double oa2t2, double *avg_len_OA1, double *avg_len_OA2);
 
-int process_modeling_queue(double *complete_time, double *down_time, double *avg_time_queue, double po, double oa1t1, double oa1t2, double oa2t1, double oa2t2);
+int process_modeling_queue(double *complete_time, double *down_time, double *avg_time_queue, double po, double oa1t1, double oa1t2, double oa2t1, double oa2t2, double *avg_len_OA1, double *avg_len_OA2);
 
-int process_modeling_queue_avg(double *complete_time, double *down_time, double *avg_time_queue, double po, double oa1t1, double oa1t2, double oa2t1, double oa2t2);
+int process_modeling_queue_avg(double *complete_time, double *down_time, double *avg_time_queue, double po, double oa1t1, double oa1t2, double oa2t1, double oa2t2, double *avg_len_OA1, double *avg_len_OA2);
 
 #endif

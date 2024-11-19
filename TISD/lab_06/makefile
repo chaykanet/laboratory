@@ -7,7 +7,7 @@ FUNC := func_tests/scripts/
 # Компилятор
 CC := gcc
 # С флаги
-CFLAGS := -std=gnu99 -Iinc -Wpedantic -Wextra -Wvla -Wfloat-conversion -g
+CFLAGS := -std=gnu99 -Iinc -Wall -Werror -Wpedantic -Wextra -Wvla -Wfloat-conversion -g
 # Объектные файлы
 # OBJECTS := func_array_io.o my_stdlib.o
 SRCS := $(wildcard $(SRC)*.c)

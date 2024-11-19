@@ -15,4 +15,6 @@ int pop_n_int_list(list_t *list, size_t const n);
 
 int make_n_time(list_t *list, queue_t *queue, double *add_list, double *pop_list, double *add_queue, double *pop_queue, const size_t n);
 
+int make_n_avg_time(list_t *list, queue_t *queue, double *add_list, double *pop_list, double *add_queue, double *pop_queue, const size_t n);
+
 #endif
