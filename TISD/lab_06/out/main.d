@@ -61,4 +61,4 @@ out/main.o: src/main.c /usr/include/stdc-predef.h /usr/include/time.h \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h inc/tree.h inc/errcodes.h \
- inc/data.h inc/tree.h inc/tree_io.h
+ inc/data.h inc/tree.h inc/tree_io.h inc/tree_io.h
