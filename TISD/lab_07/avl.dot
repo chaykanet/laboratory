@@ -1,0 +1,23 @@
+digraph G {
+	node [shape=circle];
+	"private"; 
+	"private" -> "float";
+	"float" -> "class";
+	"class" -> "char";
+	"char" -> "bool";
+	"class" -> "double";
+	"double" -> "delete";
+	"float" -> "int";
+	"int" -> "if";
+	"if" -> "for";
+	"if" -> "inline";
+	"int" -> "namespace";
+	"namespace" -> "new";
+	"private" -> "return";
+	"return" -> "public";
+	"public" -> "protected";
+	"return" -> "void";
+	"void" -> "template";
+	"template" -> "static";
+	"void" -> "while";
+}
