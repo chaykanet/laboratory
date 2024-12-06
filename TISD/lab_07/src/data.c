@@ -41,8 +41,8 @@ int make_searches(void)
 
     char w[MAX_LEN_WORD] = { 0 };
 
-    printf("Введите кол-во элементов 0 < n <= 50\n");
-    if (scanf("%d", &tmp) != 1 || tmp < 0 || tmp > 50)
+    printf("Введите кол-во элементов 0 < n <= 60\n");
+    if (scanf("%d", &tmp) != 1 || tmp < 0 || tmp > 60)
         return ERR_IO;
 
     size_t n = (size_t) tmp;
@@ -95,10 +95,10 @@ int make_searches(void)
     free(word);
     free(help);
 
-    node_t *min = find_min(tree);
+    node_t *max = find_max(tree);
 
-    if (min)
-        strcpy(w, min->word);
+    if (max)
+        strcpy(w, max->word);
 
     st = clock();
     node = search_tree(tree, &calc_tree, w);

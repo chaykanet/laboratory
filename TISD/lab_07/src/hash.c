@@ -12,7 +12,7 @@ unsigned int to_hash(const char *word, const int prime)
     {
         ascii += *p;
     }
-
+    
     return ascii % primes[prime];
 }
 
@@ -49,7 +49,7 @@ list_t *search_open_hash(open_hash_table_t *ht, size_t *calc, char *word)
 list_t *search_close_hash(close_hash_table_t *ht, size_t *calc, char *word)
 {
     int index = to_hash(word, ht->prime);
-
+   
     *calc = 0;
     while ((size_t) index < ht->size && *calc < ht->max_callisia)
     {   
@@ -85,7 +85,7 @@ close_hash_table_t *create_close_hash(int prime, int max_call)
 {
     close_hash_table_t *table = malloc(sizeof(close_hash_table_t));
     
-    size_t size = max_call * primes[prime];
+    size_t size = max_call * primes[prime] + 1;
 
     if (table)
     {
@@ -175,19 +175,26 @@ open_hash_table_t *insert_open_hash(open_hash_table_t *ht, char *word, char *hel
 close_hash_table_t *insert_close_hash(close_hash_table_t *ht, char *word, char *help)
 {
     int index = to_hash(word, ht->prime);
-
     size_t call = 0;
 
-    while (index + call < ht->size && strcmp(ht->table[index + call].word, word) != 0 && *ht->table[index + call].word != '\0')
+    while (call < ht->max_callisia && index + call < ht->size)
+    {
+        if (*ht->table[index + call].word == '\0' || strcmp(ht->table[index + call].word, word) == 0)
+            break;
+        
         call++;
+    }
     
     if (call == ht->max_callisia || index + call == ht->size)
+    {   
+        strcpy(ht->table[ht->size - 1].word, word);
+        strcpy(ht->table[ht->size - 1].help, help);
         ht = recreate_close_hash(ht, ht->prime + 1, ht->max_callisia);
+    }
     else
     {
-        index += call;
-        strcpy(ht->table[index].word, word);
-        strcpy(ht->table[index].help, help);
+        strcpy(ht->table[index + call].word, word);
+        strcpy(ht->table[index + call].help, help);
     }
     
     return ht;

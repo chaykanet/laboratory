@@ -27,6 +27,7 @@ void print_open_hash(open_hash_table_t *ht)
     }
     printf("Размер: %zu\n", ht->size);
     printf("Простое число: %d\n", primes[ht->prime]);
+    printf("Максимальное кол-во коллизий: %ld\n", ht->max_callisia);
 }
 
 void print_close_hash(close_hash_table_t *ht)
@@ -43,4 +44,5 @@ void print_close_hash(close_hash_table_t *ht)
     }
     printf("Размер: %zu\n", ht->size);
     printf("Простое число: %d\n", primes[ht->prime]);
+    printf("Максимальное кол-во коллизий: %ld\n", ht->max_callisia);
 }

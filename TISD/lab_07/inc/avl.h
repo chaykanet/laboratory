@@ -34,6 +34,8 @@ node_t *balance(node_t *p);
 
 node_t *find_min(node_t *p);
 
+node_t *find_max(node_t *p);
+
 node_t *delete(node_t *tree, char *word);
 
 node_t *insert(node_t *tree, char *word, char *help);

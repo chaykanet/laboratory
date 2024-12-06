@@ -44,7 +44,7 @@ node_t *search_tree(node_t *tree, size_t *calc, char *word)
 
     node_t *p = tree;
 
-    *calc = 1;
+    *calc = 0;
 
     if (strcmp(p->word, word) == 0)
         return p;
@@ -143,6 +143,11 @@ node_t *insert(node_t *tree, char *word, char *help)
 node_t *find_min(node_t *p)
 {
     return p->left ? find_min(p->left) : p;
+}
+
+node_t *find_max(node_t *p)
+{
+    return p->right ? find_min(p->right) : p;
 }
 
 static node_t *remove_min(node_t *min)
