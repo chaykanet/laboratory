@@ -17,6 +17,7 @@ int main(void)
     do
     {   
         move = 100;
+        rc = ERR_OK;
         printf("Меню:\n");
         printf("1.Записать полученные граф в файл graph.dot.\n");
         printf("2.Прочитать граф из файла\n");
@@ -81,9 +82,14 @@ int main(void)
             case 3:
             {   
                 printf("===================================================\n");
-                printf("Введите номер узла из до и вес дуги\n");
+                printf("Введите номера узлов src, dst и вес дуги\n");
                 int src = 0, dst = 0, weight = 0; 
-                if (scanf("%d %d %d", &src, &dst, &weight) != 3)
+                if (scanf("%d %d %d", &src, &dst, &weight) != 3 || src < 0 || dst < 0 || weight < 0)
+                    rc = ERR_IO;
+
+                while (getchar() != '\n');
+                
+                if (src == dst)
                     rc = ERR_IO;
 
                 if (rc == ERR_OK)
@@ -102,6 +108,8 @@ int main(void)
 
                 if (scanf("%d", &ver) != 1 || ver < 0)
                     rc = ERR_IO;
+                
+                while (getchar() != '\n');
 
                 if (is_empty(g))
                     find_long_way(g, ver);
@@ -110,7 +118,7 @@ int main(void)
 
                 break;
             }
-        }    
+        }
     }
     while (move != 0);
 

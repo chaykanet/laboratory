@@ -51,6 +51,8 @@ int fread_graph(char *filename, graph_t *g)
                 rc = ERR_IO;
         }
     }
+    else
+        rc = ERR_IO;
 
     return rc;
 }
