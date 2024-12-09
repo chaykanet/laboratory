@@ -199,28 +199,3 @@ close_hash_table_t *insert_close_hash(close_hash_table_t *ht, char *word, char *
     
     return ht;
 }
-
-// open_hash_table_t *delete_open_hash(open_hash_table_t *ht, char *word)
-// {
-//     int index = to_hash(word, ht->prime);
-
-//     ht->table[index] = pop_list(ht->table[index], word);
-
-//     return ht;
-// }
-
-// close_hash_table_t *delete_close_hash(close_hash_table_t *ht, char *word)
-// {
-//     int index = to_hash(word, ht->prime);
-
-//     size_t i = 0;
-
-//     while (i < ht->max_callisia)
-//     {
-//         if (strcmp(ht->table[index + i].word, word) == 0)
-//             memset(&ht->table[index + i], 0, sizeof(list_t));
-//         i++;
-//     }   
-
-//     return ht;
-// }

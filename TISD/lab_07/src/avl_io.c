@@ -61,6 +61,9 @@ int myscan(char **word, char **help)
         
         p = strchr(*help, '\n');
         if (p) *p = '\0';
+        
+        if (strlen(*word) >= 20 || strlen(*help) >= 120)
+            return ERR_OVERFLOW;
 
         return ERR_OK;
     }
