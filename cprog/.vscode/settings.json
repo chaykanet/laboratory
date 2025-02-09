@@ -1,0 +1,31 @@
+{
+    "files.associations": {
+        "stdbool.h": "c",
+        "strings_limits.h": "c",
+        "random": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "type_traits": "c",
+        "check.h": "c",
+        "string.h": "c",
+        "func_array.h": "c",
+        "errcodes.h": "c",
+        "check_my_stdlib.h": "c",
+        "cmath": "c",
+        "check_sort.h": "c",
+        "check_solve_sle.h": "c",
+        "check_comparators.h": "c",
+        "string": "c",
+        "cstdlib": "c",
+        "optional": "c",
+        "system_error": "c",
+        "functional": "c",
+        "tuple": "c",
+        "check_my_snprintfc": "cpp",
+        "car.h": "c",
+        "math.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

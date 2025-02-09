@@ -1,0 +1,12 @@
+computer
+30
+60
+fridge
+80
+0
+dog
+14
+10
+tv
+50
+20

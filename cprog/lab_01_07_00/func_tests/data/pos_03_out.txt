@@ -1,0 +1,4 @@
+Your app sum: 1.500000
+Your exact sum: 1.648721
+Your abs error: 0.148721
+Your rel error: 0.090204

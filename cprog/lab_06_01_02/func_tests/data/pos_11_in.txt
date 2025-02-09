@@ -1,0 +1,15 @@
+computercomputercomputer1
+30
+60
+dog
+14
+10
+fridge
+80
+120
+microwave
+15
+5
+tv
+50
+20

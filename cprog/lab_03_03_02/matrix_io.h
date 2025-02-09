@@ -1,0 +1,29 @@
+/* Заголовочный файл содержит функции, предназначенные для ввода/вывода матриц, массивов*/
+#ifndef H_MATRIX_IO
+#define H_MATRIX_IO
+
+#include <stdio.h>
+#include <stddef.h>
+#include "matrix_limits.h"
+#include "errcodes.h"
+
+#define CORRECT_IN 1
+#define CORRECT_IN_TWO 2
+
+/*  Осуществляет заполнение матрицы.
+    Возвращает матрицу и код ошибки выполнения функции.
+    Функция принимает пустую матрицу mat, кол-во строк n, кол-во столбцов m.
+*/
+int input_matrix(int (*mat)[M], size_t const n, size_t const m);
+
+/*  Осуществляет вывод матрицы на экран.
+    Функция принимает матрицу mat, кол-во строк n, кол-во столбцов m.
+*/
+void print_matrix(int (*mat)[M], size_t const n, size_t const m);
+
+/*  Функция осуществялет ввод размеров матрицы.
+    Функция возвращает кол-во строк n, кол-во столбцов m.
+*/
+int input_sizes_mat(int *n, int *m);
+
+#endif

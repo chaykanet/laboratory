@@ -1,0 +1,10 @@
+Result: 
+a yes
+b yes
+c yes
+d yes
+e yes
+f yes
+g yes
+ga yes
+gva yes
