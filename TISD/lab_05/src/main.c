@@ -201,7 +201,7 @@ int main(void)
             }
             break;
         case 5:
-            printf("Введите значение элемента типа int: \n");
+            printf("Введите значение элемента типа double: \n");
             if (scanf("%d", &tmp) != 1)
             {
                 printf("Некорректный ввод.\n");
@@ -217,7 +217,7 @@ int main(void)
             }
             break;
         case 6:
-            printf("Введите значение элемента типа int: \n");
+            printf("Введите значение элемента типа double: \n");
             if (scanf("%d", &tmp) != 1)
             {
                 printf("Некорректный ввод.\n");

@@ -73,7 +73,7 @@ int main(void)
         case 3:
         {
             printf("======================================\n");
-
+            printf("Если в дереве уже существует записанное имя файла, то элемент не будет добавлен!\n");
             printf("Введите имя файла: \n");
 
             char *filename = NULL;
@@ -98,6 +98,20 @@ int main(void)
                     rc = ERR_IO;
                 }
 
+                rc = check_data(day, mon);
+
+                 if (rc == ERR_OK)
+                {   
+                    node_t *n = find_byname(tree_name, filename);
+
+                    if (n)
+                    {
+                        free(filename);
+                        printf("Узел уже существует\n");
+                        break;
+                    }
+                }
+
                 if (rc == ERR_OK)
                 {   
                     data_t data = { 24 * day, mon, year };
@@ -116,7 +130,7 @@ int main(void)
         case 4:
         {
             printf("======================================\n");
-
+            printf("Если в дереве уже существует записанная дата файла, то элемент не будет добавлен!\n");
             printf("Введите имя файла: \n");
 
             char *filename = NULL;
@@ -147,9 +161,20 @@ int main(void)
                 if (rc == ERR_OK)
                 {   
                     data_t data = { 24 * day, mon, year };
+                    node_t *n = find_bydata(tree_data, data);
 
+                    if (n)
+                    {
+                        free(filename);
+                        printf("Узел уже существует\n");
+                        break;
+                    }
+                }
+
+                if (rc == ERR_OK)
+                {   
+                    data_t data = { 24 * day, mon, year };
                     node_t *node = init_node(filename, data);
-    
                     tree_data = add_to_tree_bydata(tree_data, node);
                 }
                 else
@@ -167,13 +192,12 @@ int main(void)
         case 5:
         {
             printf("======================================\n");
-            printf("Введите имя файла: \n");
-
             if (tree_name == NULL)
             {
                 printf("Ошибка: Дерево пустое\n");
                 break;
             }
+            printf("Введите имя файла: \n");
 
             char *filename = NULL;
             size_t n = 0;
@@ -183,16 +207,15 @@ int main(void)
 
             if (read > 0)
             {   
-                int err = ERR_OK;
                 char *p = strchr(filename, '\n');
                 
                 if (p)
                     *p = '\0';
 
-                tree_name = delete_node_byname(tree_name, filename, &err);
-                
-                if (err != ERR_OK)
+                if (!find_byname(tree_name, filename))
                     printf("Узел не найден\n");
+                else
+                    tree_name = delete_node_byname(tree_name, filename);
 
                 free(filename);
             }
@@ -223,7 +246,10 @@ int main(void)
                 if (rc == ERR_OK)
                 {   
                     data_t data = { 24 * day, mon, year };
-                    tree_data = delete_less_data(tree_data, data);
+                    size_t calc = 0;
+                    tree_data = delete_less_data(tree_data, data, &calc);
+
+                    printf("Удалено узлов: %zu\n", calc);
                 }
                 else
                     printf(" Ошибка: некорректный ввод.\n");

@@ -1,34 +1,51 @@
-def process_file(input_file, output_file):
-    try:
-        with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
-            i = 1
-            c = 1
-            for line in infile:
-                # Убираем пробелы в начале и конце строки
-                stripped_line = line.strip()
-                
-                # Проверяем, начинается ли строка с маленькой буквы
-                if stripped_line and stripped_line[0].islower():
-                    # Добавляем символ "_" к строке
-                    modified_line = stripped_line + "_" * i
-                    i += 1
-                    if i == 100:
-                        c += 1
-                        i = c
-                else:
-                    modified_line = stripped_line
-                
-                # Записываем строку в выходной файл
-                outfile.write(modified_line + '\n')
+import sys
+import random
+import string
+from datetime import datetime, timedelta
 
-        print(f"Обработка завершена. Результаты записаны в '{output_file}'.")
+def generate_random_name(length=5):
+    """Генерирует случайное имя заданной длины."""
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for _ in range(length))
 
-    except Exception as e:
-        print(f"Произошла ошибка: {e}")
+def generate_random_date(start_date, end_date):
+    """Генерирует уникальную случайную дату между двумя заданными датами."""
+    return start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
 
-# Укажите здесь имена входного и выходного файлов
-input_filename = 'data.txt'  # файл, который нужно обработать
-output_filename = 'data_1.txt'  # файл для записи результата
+def generate_unique_dates(num_dates, start_date, end_date):
+    """Генерирует уникальные случайные даты между двумя заданными датами."""
+    unique_dates = set()
+    while len(unique_dates) < num_dates:
+        random_date = generate_random_date(start_date, end_date).strftime('%d %m %Y')
+        unique_dates.add(random_date)
+    return list(unique_dates)
 
-# Запускаем процесс
-process_file(input_filename, output_filename)
+def generate_nodes(num_nodes):
+    """Генерирует список узлов с случайными именами и уникальными датами обновления."""
+    nodes = []
+    start_date = datetime(2020, 1, 1)
+    end_date = datetime(2024, 1, 1)
+
+    unique_dates = generate_unique_dates(num_nodes, start_date, end_date)
+
+    for i in range(num_nodes):
+        name = generate_random_name()
+        update_date = unique_dates[i]
+        nodes.append((name, update_date))
+
+    return nodes
+
+def write_nodes_to_file(nodes, filename):
+    """Записывает узлы в текстовый файл."""
+    with open(filename, 'w') as file:
+        for name, date in nodes:
+            file.write(f'{name}\n{date}\n')
+
+# Пример использования
+if __name__ == "__main__":
+    num_nodes = 1000  # количество узлов для генерации
+    generated_nodes = generate_nodes(num_nodes)
+    
+    with open(sys.argv[1], "w") as f: 
+        for name, date in generated_nodes:
+            f.write(f"{name}\n{date}\n")

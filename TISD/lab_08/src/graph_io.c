@@ -36,19 +36,15 @@ int fread_graph(char *filename, graph_t *g)
         if (fscanf(f, "%d\n", &num_vers) != 1 || num_vers <= 0)
             rc = ERR_IO;
 
-        if (rc == ERR_IO)
-        {
-            g = init_graph(g, num_vers);
-        }
-
         for (int i = 0; i < num_vers - 1 && rc == ERR_OK; i++)
         {   
             int src = 0, dst = 0, weight = 0;
 
-            if (fscanf(f, "%d %d %d\n", &src, &dst, &weight) == 3 && src >=0 && dst >= 1 && weight >= 0)
+            if (fscanf(f, "%d %d %d\n", &src, &dst, &weight) == 3 && src >=0 && dst >= 0 && weight >= 0)
                 g = add_to_graph(g, src, dst, weight);
-            else
-                rc = ERR_IO;
+            
+            if (rc == EOF)
+                rc = ERR_OK;
         }
     }
     else

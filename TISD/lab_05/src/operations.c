@@ -75,35 +75,6 @@ int init_random_list(list_t *list, const size_t n, const double t1, const double
     return rc;
 }
 
-// int calc_avg_list(queue_t *list, double *time_avg)
-// {
-//     double sum = 0;
-
-//     int clc = 0;
-
-//     node_t *pcur = list->pout;
-
-//     while (pcur && pcur != list->pin)
-//     {
-//         sum += pcur->value;
-//         clc++;
-//         pcur = pcur->prev;
-//     }
-    
-//     if (pcur)
-//     {
-//         sum += pcur->value;
-//         clc++;
-//     }
-
-//     if (clc)
-//         *time_avg = sum / clc;
-//     else
-//         *time_avg = 0;
-
-//     return ERR_OK;
-// }
-
 size_t calc_len(list_t *list)
 {
     size_t c = 0;
@@ -187,15 +158,13 @@ int process_modeling_queue(double *complete_time, double *down_time, double *avg
         {   
             t1 = ((double)rand() / RAND_MAX) * (oa1t2 - oa1t1) + oa1t1; 
             calc_OA2++;
-            rc_1 = add_to_queue(&OA1, t1); // ???
+            rc_1 = add_to_queue(&OA1, t1);
         }
 
         if (calc_OA2 && calc_OA2 % 100 == 0 && calc_OA2 != prev)
         {   
             prev = calc_OA2;
-            // printf("AO1: %lu\n", calc_OA1);
-            // printf("AO2: %lu\n", calc_OA2);
-            // printf("\n");
+            
             sum_len_OA1 += abs(OA1.pin - OA1.pout) + 1;
             sum_len_OA2 += abs(OA2.pin - OA2.pout) + 1;
 
@@ -219,11 +188,11 @@ int process_modeling_queue(double *complete_time, double *down_time, double *avg
 
                 calc_OA++;
 
-                //p = ((double)rand() / RAND_MAX) * 1.0;
+                
                 taken++;
             }
         }
-        // printf("DEBUG:%lu \n", calc_OA);
+        
         
         if (fabs(time2) < EPS)
         {   
@@ -241,7 +210,7 @@ int process_modeling_queue(double *complete_time, double *down_time, double *avg
 
         time_OA2 += time2;
 
-        rc_2 = take_frm_queue(&OA2, &time2); // сделать счетчик тайкен ++ в иф до n - 1. ну пон.
+        rc_2 = take_frm_queue(&OA2, &time2);
 
         for (int i = taken; i > 0; i--)
         {   
@@ -275,7 +244,15 @@ int process_modeling_queue(double *complete_time, double *down_time, double *avg
     {   
         *avg_len_OA1 = (max_len_1 + min_len_1) / 2;
         *avg_len_OA2 = (max_len_2 + max_len_2) / 2;
-        *complete_time = time_OA2 + down / 2;
+
+        if (time_OA1 > time_OA2)
+            *complete_time = time_OA1;
+        else
+            *complete_time = time_OA2 + down;
+        
+        printf("DEBUG calc_OA: %lu", calc_OA);
+        printf("DEBUG TIME OA1: %lf\n", time_OA1);
+        printf("DEBUG DOWN : %lf", down);
         *down_time = down / 2;
         *avg_time_queue = (time_OA1 / calc_OA + time_OA2 / calc_OA2) / 2;
     }
@@ -349,15 +326,13 @@ int process_modeling_queue_avg(double *complete_time, double *down_time, double 
         {   
             t1 = (oa1t2 + oa1t1) / 2;
             calc_OA2++;
-            rc_1 = add_to_queue(&OA1, t1); // ???
+            rc_1 = add_to_queue(&OA1, t1); 
         }
 
         if (calc_OA2 && calc_OA2 % 100 == 0 && calc_OA2 != prev)
         {   
             prev = calc_OA2;
-            // printf("AO1: %lu\n", calc_OA1);
-            // printf("AO2: %lu\n", calc_OA2);
-            // printf("\n");
+          
             sum_len_OA1 += abs(OA1.pin - OA1.pout) + 1;
 
             sum_len_OA2 += abs(OA2.pin - OA2.pout) + 1;
@@ -385,7 +360,6 @@ int process_modeling_queue_avg(double *complete_time, double *down_time, double 
                 taken++;
             }
         }
-        // printf("DEBUG:%lu \n", calc_OA);
         
         if (fabs(time2) < EPS)
         {   
@@ -434,12 +408,15 @@ int process_modeling_queue_avg(double *complete_time, double *down_time, double 
     
     if (calc_OA2 == 1000)
     {   
-        // printf("DEBUG %lf\n", down / 2);
-        // printf("DEBUG %lf\n", time_OA2 + down / 2);
+        
         *avg_len_OA1 = (max_len_1 + min_len_1) / 2;
         *avg_len_OA2 = (max_len_2 + min_len_2) / 2;
-        printf("DEBUG %lf \n", down / 2);
-        *complete_time = time_OA2 + down / 2;
+    
+        if (time_OA1 > time_OA2)
+            *complete_time = time_OA1;
+        else
+            *complete_time = time_OA2 + down;
+
         *down_time = down / 2;
         *avg_time_queue = (time_OA1 / calc_OA + time_OA2 / calc_OA2) / 2;
     }
@@ -510,15 +487,13 @@ int process_modeling_list(double *complete_time, double *down_time, double *avg_
             t1 = ((double)rand() / RAND_MAX) * (oa1t2 - oa1t1) + oa1t1; 
             calc_OA2++;
             node_t *node = create_node(t1);
-            rc_1 = add_to_list(&OA1, node); // ???
+            rc_1 = add_to_list(&OA1, node); 
         }
 
         if (calc_OA2 && calc_OA2 % 100 == 0 && calc_OA2 != prev)
         {   
             prev = calc_OA2;
-            // printf("AO1: %lu\n", calc_OA1);
-            // printf("AO2: %lu\n", calc_OA2);
-            // printf("\n");
+           
             sum_len_OA1 += abs(OA1.pin - OA1.pout) + 1;
             sum_len_OA2 += abs(OA2.pin - OA2.pout) + 1;
 
@@ -542,11 +517,11 @@ int process_modeling_list(double *complete_time, double *down_time, double *avg_
 
                 calc_OA++;
 
-                //p = ((double)rand() / RAND_MAX) * 1.0;
+                
                 taken++;
             }
         }
-        // printf("DEBUG:%lu \n", calc_OA);
+        
         
         if (fabs(time2) < EPS)
         {   
@@ -602,7 +577,12 @@ int process_modeling_list(double *complete_time, double *down_time, double *avg_
     {   
         *avg_len_OA1 = (max_len_1 + min_len_1) / 2;
         *avg_len_OA2 = (max_len_2 + max_len_2) / 2;
-        *complete_time = time_OA2 + down / 2;
+        
+        if (time_OA1 > time_OA2)
+            *complete_time = time_OA1;
+        else
+            *complete_time = time_OA2 + down;
+            
         *down_time = down / 2;
         *avg_time_queue = (time_OA1 / calc_OA + time_OA2 / calc_OA2) / 2;
     }

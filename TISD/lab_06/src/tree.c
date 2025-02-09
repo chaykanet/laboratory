@@ -46,6 +46,32 @@ void free_tree(node_t *tree)
     }
 }
 
+node_t *find_byname(node_t *tree, char *name)
+{   
+    if (tree == NULL)
+        return NULL;
+
+    if (strcmp(tree->filename, name) < 0)
+        return find_byname(tree->right, name);
+    else if (strcmp(tree->filename, name) > 0)
+        return find_byname(tree->left, name);
+
+    return tree;
+}
+
+node_t *find_bydata(node_t *tree, data_t data)
+{   
+    if (tree == NULL)
+        return NULL;
+
+    if (compare_data(&tree->data, &data) < 0)
+        return find_bydata(tree->left, data);
+    else if (compare_data(&tree->data, &data) > 0)
+        return find_bydata(tree->right, data);
+
+    return tree;
+}
+
 node_t *init_node(char *filename, data_t data)
 {
     node_t *node = malloc(sizeof(node_t));
@@ -92,7 +118,7 @@ node_t *add_to_tree_byname(node_t *tree, node_t *node)
 
     if (strcmp(tree->filename, node->filename) < 0)
         tree->left = add_to_tree_byname(tree->left, node);
-    else 
+    else if (strcmp(tree->filename, node->filename) > 0)
         tree->right = add_to_tree_bydata(tree->right, node);
     
     return tree;
@@ -108,104 +134,58 @@ node_t *add_to_tree_bydata(node_t *tree, node_t *node)
 
     if (compare_data(&tree->data, &node->data) < 0)
         tree->left = add_to_tree_bydata(tree->left, node);
-    else 
+    else if (compare_data(&tree->data, &node->data) > 0)
         tree->right = add_to_tree_bydata(tree->right, node);
     
     return tree;
 }
 
-node_t *delete_node_byname(node_t *tree, char *name, int *rc)
+node_t *delete_node_byname(node_t *tree, char *name)
 {   
-    node_t *p = tree;
-    node_t *parent = NULL;
-
-    while (p != NULL && strcmp(name, p->filename) != 0)
+    if (strcmp(tree->filename, name) < 0)
+        tree->right = delete_node_byname(tree->right, name);
+    else if (strcmp(tree->filename, name) > 0)
+        tree->left = delete_node_byname(tree->left, name);
+    else
     {
-        parent = p;
-        
-        if (strcmp(name, p->filename) < 0)
-            p = p->left;
-        else
-            p = p->right;
-    }
+        if (tree->left == NULL)
+        {
+            free_node(tree);
 
-    if (p == NULL)
-    {   
-        *rc = ERR_DELETE;
-        return tree;
-    }
-
-    if (p->left == NULL && p->right == NULL)
-    {
-        
-        if (p == tree)
-        {
-            free(p);
-            return NULL;
-        }
-        else if (parent->left == p)
-        {
-            parent->left = NULL;
-        }
-        else if (parent->right == p)
-        {
-            parent->right = NULL;
+            return tree->right;
         }
 
-        free(p);
-        *rc = ERR_OK;
-        return tree;
-    }
-    else if (p->left == NULL || p->right == NULL)
-    {   
-        node_t *child;
-
-        if (p->left)
-            child = p->left;
-        else
-            child = p->right;
-
-
-        if (p == tree)
+        if (tree->right == NULL)
         {
-            free(p);
-            *rc = ERR_OK;
-            return child;
+            free_node(tree);
+
+            return tree->left;
         }
 
-        if (parent->left == p)
-            parent->left = child;
-        else
-            parent->right = child;
+        node_t *min = min_elem_tree(tree->right);
 
-        free(p);
-        *rc = ERR_OK;
-        return tree;
+        char *strname = strdup(min->filename);
+        data_t data = min->data;
+
+        if (tree->filename)
+            free(tree->filename);
+
+        tree->filename = strname;
+        tree->data = data;
+        tree->right = delete_node_byname(tree->right, tree->filename);
     }
-    else if (p->left && p->right)
-    {
-        node_t *child = min_elem_tree(p->right);
 
-        char *filename = child->filename;
-        data_t data = child->data;
-
-        tree = delete_node_byname(tree, filename, rc);
-
-        p->filename = filename;
-        p->data = data;
-    }
-    *rc = ERR_OK;
     return tree;
 }
 
-node_t *delete_less_data(node_t *tree, data_t data)
+node_t *delete_less_data(node_t *tree, data_t data, size_t *calc)
 {   
     if (tree == NULL)
         return NULL;
 
-    tree->left = delete_less_data(tree->left, data);
+    tree->left = delete_less_data(tree->left, data, calc);
 
-    tree->right = delete_less_data(tree->right, data);
+    tree->right = delete_less_data(tree->right, data, calc);
 
     if (compare_data(&tree->data, &data) <= 0)
     {
@@ -214,6 +194,8 @@ node_t *delete_less_data(node_t *tree, data_t data)
         if (tree->right != NULL)
         {    
             temp = tree->right;
+
+            (*calc)++;
             
             if (tree)
                 free_node(tree);
@@ -225,11 +207,39 @@ node_t *delete_less_data(node_t *tree, data_t data)
         if (tree)
             free_node(tree);
         
+        (*calc)++;
+
         return temp;
     }
 
     return tree;
 }
+
+// node_t *delete_less_data(node_t *tree, data_t data) 
+// {   
+//     if (tree == NULL)
+//         return NULL;
+
+//     if (compare_data(&tree->data, &data) <= 0) 
+//     {
+//         node_t *temp = NULL;
+
+       
+//         if (tree->right != NULL) {    
+//             temp = tree->right;
+//         } else {
+//             temp = tree->left;    
+//         }
+        
+//         free_node(tree);  
+//         return delete_less_data(temp, data); 
+//     }
+
+//     tree->left = delete_less_data(tree->left, data);
+//     tree->right = delete_less_data(tree->right, data);
+    
+//     return tree;
+// }
 
 static void inorder(node_t *tree, node_t **list, size_t *index)
 {

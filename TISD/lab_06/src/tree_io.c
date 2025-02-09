@@ -128,6 +128,6 @@ void print_inorder(node_t *tree)
         return;
 
     print_inorder(tree->left);
-    printf("%s [%d.%d.%d]", tree->filename, tree->data.hour, tree->data.mon, tree->data.year);
+    printf("%s [%d.%d.%d], ", tree->filename, tree->data.hour, tree->data.mon, tree->data.year);
     print_inorder(tree->right);
 }
