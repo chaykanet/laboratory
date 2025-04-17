@@ -1,0 +1,3 @@
+/home/chayka/lab_02CA/CMakeFiles/MyApp.dir
+/home/chayka/lab_02CA/CMakeFiles/edit_cache.dir
+/home/chayka/lab_02CA/CMakeFiles/rebuild_cache.dir
