@@ -1,0 +1,37 @@
+---
+# Основные отступы
+AccessModifierOffset: -4
+IndentWidth: 4
+ColumnLimit: 100
+UseTab: Never
+
+# Скобки и переносы
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass: true
+  AfterStruct: true
+  AfterFunction: true
+  AfterControlStatement: Never
+
+# Пробелы и выравнивание
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyBlock: false
+SpacesInParentheses: Never
+PointerAlignment: Right
+AlignAfterOpenBracket: Align
+AlignOperands: Align
+
+# Функции и выражения
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+BinPackParameters: false
+
+# Конструкторы и наследование
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeColon
+
+# Пространства имен
+NamespaceIndentation: None
+...
